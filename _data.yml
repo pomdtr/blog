@@ -1,0 +1,15 @@
+lang: en
+
+home:
+  welcome: Latest Posts
+
+menu_links: [{ href: "/about", text: "About" }]
+extra_head: []
+
+# Metas plugin https://lume.land/plugins/metas/#description
+metas:
+  site: Pomdtr's blog
+  description: I guess I write stuff.
+  title: "=title"
+  image: "=image"
+  lang: en
