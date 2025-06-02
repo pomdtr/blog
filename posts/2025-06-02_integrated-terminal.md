@@ -3,13 +3,29 @@ author: pomdtr
 title: Can a chrome extension host a terminal emulator?
 ---
 
-Last week, I [wrote](/posts/2025-05-29_tweety-v1) on using my browser as a terminal emulator. The post caught a lot of attention on [lobster.rs](https://lobste.rs/s/9j9wdi/case_for_using_web_browser_as_your), and I received some interesting feedback.
+Last week, I [wrote](/posts/tweety-v1) on using my browser as a terminal emulator. The post caught a lot of attention on [lobster.rs](https://lobste.rs/s/9j9wdi/case_for_using_web_browser_as_your), and I received some interesting feedback.
 
 The most common criticism was that running a terminal from a browser tab was inherently insecure. There were also some concerns about the complexity of the setup, and the fact that it requires a server to run at all times.
 
 I'm happy to report that I have a solution for both of these: [Tweety](https://github.com/pomdtr/tweety) is now distributed as a chrome extension!
 
 <!-- more -->
+
+## The most underrated extension API: Native Messaging
+
+The [Native Messaging API](https://developer.chrome.com/docs/extensions/develop/concepts/native-messaging) allows a Chrome extension to communicate with a native messaging host running on the user's computer. In our case, the native messaging host will be the `tweety` cli, that you can install using Homebrew:
+
+```sh
+brew install pomdtr/tap/tweety
+
+# register the native messaging host
+# currently you will need to install the extension manually, as it is not yet published on the Chrome Web Store
+tweety install --extension-id <your-extension-id>
+```
+
+After you install the extension, your browser will look for the native messaging host registered by the extension each time it starts. If the host isn't already running, the browser will launch it (note: the native messaging host must be installed separately). The host communicates with the extension through standard input and output (stdin/stdout).
+
+When you open new a Tweety tab, the extension will send a message to the native host, which will then start a terminal emulator session and return a websocket URL to the extension. The extension will then connect to the terminal emulator using this URL, and display the terminal in the tab.
 
 ## Why a Chrome extension?
 
@@ -33,22 +49,6 @@ exec /usr/local/bin/htop
 I'll get a new url for htop: `chrome-extension://<your-extension-id>/term.html?mode=app&app=htop`.
 
 ![htop running in tweety](./img/tweety-htop.png)
-
-## The most underrated extension API: Native Messaging
-
-The [Native Messaging API](https://developer.chrome.com/docs/extensions/develop/concepts/native-messaging) allows a Chrome extension to communicate with a native messaging host running on the user's computer. In our case, the native messaging host will be the `tweety` cli, that you can install using Homebrew:
-
-```sh
-brew install pomdtr/tap/tweety
-
-# register the native messaging host
-# currently you will need to install the extension manually, as it is not yet published on the Chrome Web Store
-tweety install --extension-id <your-extension-id>
-```
-
-After you install the extension, your browser will look for the native messaging host registered by the extension each time it starts. If the host isn't already running, the browser will launch it (note: the native messaging host must be installed separately). The host communicates with the extension through standard input and output (stdin/stdout).
-
-When you open new a Tweety tab, the extension will send a message to the native host, which will then start a terminal emulator session and return a websocket URL to the extension. The extension will then connect to the terminal emulator using this URL, and display the terminal in the tab.
 
 ## Proxying the chrome extension api through the `tweety` cli
 
