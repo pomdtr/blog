@@ -11,4 +11,5 @@ This website is built with [lume](https://lume.land/), and hosted thanks to [sma
 
 - [Github](https://github.com/pomdtr)
 - [Bluesky](https://bsky.app/profile/pomdtr.me)
+- [Lobster](https://lobste.rs/~pomdtr)
 - [RSS Feed](https://blog.pomdtr.me/feed.xml)
