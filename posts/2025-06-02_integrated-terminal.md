@@ -11,6 +11,8 @@ I'm happy to report that I have a solution for both of these: [Tweety](https://g
 
 <!-- more -->
 
+![screenshot of the tweety extension in a sidebar](./img/side-panel.png)
+
 ## The most underrated extension API: Native Messaging
 
 The [Native Messaging API](https://developer.chrome.com/docs/extensions/develop/concepts/native-messaging) allows a Chrome extension to communicate with a native messaging host running on the user's computer. In our case, the native messaging host will be the `tweety` cli, that you can install using Homebrew:
@@ -30,8 +32,6 @@ When you open new a Tweety tab, the extension will send a message to the native 
 ## Why a Chrome extension?
 
 Chrome extensions have a lot of interesting api to leverages. In addition to putting terminals in browser tabs, i'm now a able to create them as a sidebar, or even in the devtools panel!
-
-![screenshot of the tweety extension in a sidebar](./img/side-panel.png)
 
 Since chrome extensions page have an url, I can leverage query parameters to open specific views. Ex:
 

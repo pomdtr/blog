@@ -3,7 +3,10 @@ lang: en
 home:
   welcome: Latest Posts
 
-menu_links: [{ href: "/about", text: "About" }]
+menu_links:
+  - { href: "/feed.xml", text: "RSS" }
+  - { href: "/about", text: "About" }
+
 extra_head: []
 
 # Metas plugin https://lume.land/plugins/metas/#description
